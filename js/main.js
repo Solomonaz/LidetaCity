@@ -129,3 +129,26 @@ $(document).ready(function () {
     $('#dtBasicExample').DataTable();
     $('.dataTables_length').addClass('bs-select');
   });
+
+    // Initialize and display the map
+    function initMap() {
+        // Specify the coordinates for the center of the map
+        var center = { lat:  9.014673870532777, lng: 38.74423063416092 };
+    
+        // Create a new map object
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: center,
+          zoom: 12 // Adjust the zoom level as desired
+        });
+    
+        // Add a marker to the map
+        var marker = new google.maps.Marker({
+          position: center,
+          map: map,
+          title: 'Hello, World!' // Replace with your marker's title
+        });
+         // Call the initMap function
+ 
+      }  initMap();
+
+    
