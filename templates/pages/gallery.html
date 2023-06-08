@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+ {% load static %}
+{% block content %}
+
+
+    <!-- Navbar Start -->
+    <div class="container-fluid bg-primary py-5 bg-header bg-dark" style="margin-bottom: 90px;">
+        <div class="row py-5">
+            <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                <h1 class="display-4 text-white animated zoomIn">What Our Photos Say!</h1>
+                <a href="" class="h5 text-white">Home</a>
+                <i class="far fa-circle text-white px-2"></i>
+                <a href="" class="h5 text-white">Gallary</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Navbar End -->
+ <!-- News feed starts-->
+ <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="row g-5">
+{% for gallery in galleries %}
+            <div class="col-lg-3 wow slideInUp" data-wow-delay="0.3s">
+                <div class="blog-item bg-light rounded overflow-hidden">
+                    <div class="blog-img position-relative overflow-hidden" style="height: 200px; width: fit-content;" >
+                        <img class="img-fluid" src="{{ gallery.gallery_image.url }}" alt="">
+                    </div>
+                    <div class="p-4">
+                        <a href="">
+                        <!-- <h4 class="mb-3">{{gallery.gallery_title}}</h4> -->
+                        <p>{{gallery.description}}</p>
+                    </a>
+                    </div>
+                </div>
+            </div>
+{% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+

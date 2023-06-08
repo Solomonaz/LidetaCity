@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+ {% load static %}
+{% block content %}
+
+    <!-- Navbar Start -->
+    <div class="container-fluid position-relative p-0">
+        <div class="container-fluid bg-primary py-5 bg-header bg-dark" style="margin-bottom: 90px;">
+            <div class="row py-5">
+                <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                    <h1 class="display-4 text-white animated zoomIn">Latest News</h1>
+                    <a href="/" class="h5 text-white">Home</a>
+                    <i class="far fa-circle text-white px-2"></i>
+                    <a href="" class="h5 text-white">News</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- news Start -->
+    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-8">
+                    <!-- Blog Detail Start -->
+                    {% for news in headline_news %}
+                    <div class="mb-5">
+                        <img class="img-fluid w-100 rounded mb-5" src="{{news.headline_news_image.url}}" alt="News image">
+                        <div class="d-flex mb-3">
+                            <small class="me-3"><i class="far fa-user text-primary me-2"></i>{{news.user}}</small>
+                            <small><i class="far fa-calendar-alt text-primary me-2"></i>{{news.date_created}}</small>
+                        </div>
+                        <h1 class="mb-4">{{news.headline_news_title}}</h1>
+                        <p>{{news.headline_news_body}}</p>
+
+                    </div>
+                    <!-- Blog Detail End -->
+                    <div class="">
+                        <a class="btn btn-primary btn-sm me-2 " style="border-radius: 10%;" href="#"><i
+                                class="fab fa-facebook-f fw-normal"></i>Share</a>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Sidebar Start -->
+                <div class="col-lg-4">
+                    
+                    <!-- Recent Post Start -->
+                    <div class="mb-5 wow slideInUp" data-wow-delay="0.1s">
+                        <div class="section-title section-title-sm position-relative pb-3 mb-4">
+                            <h3 class="mb-0">Recent Post</h3>
+                        </div>
+                        {% for post in news %}
+                            {% if post.is_recent %}
+                        <div class="d-flex rounded overflow-hidden mb-3">
+                            <img class="img-fluid" src="{{post.news_image.url}}"
+                                style="width: 100px; height: 100px; object-fit: cover;" alt="">
+                            <a href="" class="  align-items-center bg-light px-3 mb-0"> {{post.news_title}} <br>
+                                <small class="text-dark"><i class="far fa-calendar-alt me-2"></i>{{post.date_created}}</small>
+
+                            </a>
+                        </div>
+                            {% endif %}
+                        {% endfor %}
+                        
+                    </div>
+                   
+                    <!-- Recent Post End -->
+                </div>
+                <!-- Sidebar End -->
+            </div>
+        </div>
+    </div>
+    <!-- news End -->
+    <!-- News feed starts-->
+    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                {% for n in news %}
+                {% if not n.is_recent %}
+                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
+                    <div class="blog-item bg-light rounded overflow-hidden">
+                        <div class="blog-img position-relative overflow-hidden"  style="height: 200px; width: fit-content;">
+                            <img class="img-fluid" src="{{n.news_image.url}}" alt="">
+
+                        </div>
+                        <div class="p-4">
+                            <div class="d-flex mb-3">
+                                <small class="me-3"><i class="far fa-user text-primary me-2"></i>{{n.user}}</small>
+                                <small><i class="far fa-calendar-alt text-primary me-2"></i>{{n.date_created}}</small>
+                            </div>
+                            <h4 class="mb-3">{{n.news_title}}</h4>
+                            <p>{{n.news_body}}</p>
+                            <a class="text-uppercase" href="{% url 'news' %}">Read More <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            
+            <!-- pagination -->
+            <div class="col-12 wow slideInUp py-md-3" data-wow-delay="0.1s">
+                <nav class="mt-4" aria-label="Page navigation sample">
+                    {% if posts.has_other_pages %}
+                      <ul class="pagination">
+                         {% if posts.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page={{posts.previous_page_number}}">Previous</a></li>
+                        {% else %}
+                        <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                         {% endif %} 
+                
+                         {% for i in posts.paginator.page_range %}
+                            {% if posts.number == i %}
+                             <li class="page-item active"><a class="page-link" href="#">{{i}}</a></li>
+                             {% else %}
+                             <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if posts.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{posts.next_page_number}}">next</a></li>
+                        {% else %}
+                        <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                        {% endif %}
+                      </ul>
+                      {% endif %}
+                    </nav>
+
+
+            </div>
+            <!-- pagination -->
+        </div>
+    </div>
+
+    <!-- Mews feed ends -->
+{% endblock %}
